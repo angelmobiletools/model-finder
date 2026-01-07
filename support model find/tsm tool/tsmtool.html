@@ -1,0 +1,2373 @@
+<!DOCTYPE html>
+<!-- saved from url=(0028)https://tsm-tool.com/Support -->
+<html lang="en" class="dark" data-theme="light" webcrx=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Turbo Service Mobile Support Models
+    </title>
+
+    <link href="./tsmtool_files/css.css" rel="stylesheet">
+    <script src="./tsmtool_files/jquery.js.download"></script><script src="blob:https://tsm-tool.com/f9cdbaab-d31e-4dee-8024-1d9e662bac24"></script>
+
+    <link rel="stylesheet" href="./tsmtool_files/style.css">
+
+    <link href="./tsmtool_files/google.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="./tsmtool_files/materialize.min.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://tsm-tool.com/static/imgs/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://tsm-tool.com/static/imgs/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://tsm-tool.com/static/imgs/favicon/favicon-16x16.png">
+    <link rel="manifest" href="https://tsm-tool.com/static/imgs/favicon/site.webmanifest">
+    <link rel="mask-icon" href="https://tsm-tool.com/static/imgs/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <style>
+
+        body.light-theme {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        body.dark{
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px; /* Space between cards */
+        }
+
+        .card {
+            width: 360px; /* Set a base width for cards */
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            text-decoration: none;
+            outline: none;
+            text-overflow: ellipsis
+        }
+
+        .light-theme .card {
+            background-color: var(--card-bg-light);
+        }
+
+        .dark .card {
+            background-color: var(--card-bg-dark);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            background-color: var(--accent-light);
+            color: white;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            padding-bottom: 5px;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .device-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 0 15px 0;
+        }
+
+        .device-info,device-models,.device-chip {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .functions-title {
+            font-size: 20px;
+            margin: 30px 0 20px 0;
+            border-bottom: 2px solid var(--accent-light);
+            padding-bottom: 10px;
+        }
+
+        .function {
+            background-color: var(--function-bg-light);
+            margin-bottom: 6px;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .dark .function {
+            background-color: var(--function-bg-dark);
+        }
+
+        .function:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .function-name {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .function-icon {
+            margin-right: 15px;
+            font-size: 20px;
+        }
+
+        .function-flag {
+            font-size: 12px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background-color: var(--accent-light);
+            color: white;
+            overflow: hidden;
+        }
+
+        #theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: var(--accent-light);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        #theme-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                width: 90%; /* Full width on small screens */
+            }
+        }
+
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+            .search-container, .filter-container {
+                margin: 10px 0;
+            }
+            .device-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 19px;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none; /* Initially hide the button */
+        }
+
+
+/* ##################
+###############################################
+#####################################################################
+############################################################################################## */
+/* 
+
+            :root { 
+            --bg-light: #f0f4f8;
+            --card-bg-light: #ffffff;
+            --text-light: #333333;
+            --accent-light: #4a69bd;
+            --function-bg-light: #e9ecef;
+            --function-text-light: #495057;
+            --bg-dark: #1a1a2e;
+            --card-bg-dark: #16213e;
+            --text-dark: #e0e0e0;
+            --accent-dark: #4a69bd;
+            --function-bg-dark: #0f3460;
+            --function-text-dark: #e0e0e0;
+        } */
+        :root { 
+            --bg-light: #f0f4f8;
+            --card-bg-light: #ffffff;
+            --text-light: #333333;
+            --accent-light: #4a69bd;
+            --function-bg-light: #e9ecef;
+            --function-text-light: #495057;
+            --bg-dark: #1a1a2e;
+            --card-bg-dark: #16213e;
+            --text-dark: #e0e0e0;
+            --accent-dark: #4a69bd;
+            --function-bg-dark: #0f3460;
+            --function-text-dark: #e0e0e0;
+        }
+
+
+        :root {
+            /* --bg: #f5f5f5; */
+            --card-bg: #ffffff;
+            --text: #333333;
+            --text-muted: #666666;
+            --border: #e0e0e0;
+            --accent: #4a6cf7;
+            --shadow: rgba(0,0,0,0.08);
+        }
+
+        .dark{
+            --card-bg: #3a3a3a;
+            --text: #ebe9e9;
+            --text-muted: #a8a7a7;
+        }
+        body.light-theme {
+            
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        .dark {
+            --card-bg: #ffffff;
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 5px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 10px 15px 10px 40px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 0.95rem;
+            width: 250px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 160px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            fill: var(--text-muted);
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+        }
+
+        .toggle-track {
+            width: 44px;
+            height: 24px;
+            background: var(--border);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .toggle-thumb {
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+        }
+
+        [data-theme="dark"] .toggle-thumb {
+            transform: translateX(20px);
+        }
+
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .brand-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px 16px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .brand-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        .brand-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-icon svg {
+            width: 48px;
+            height: 48px;
+        }
+
+        .brand-name {
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .brand-country {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .controls {
+                justify-content: space-between;
+            }
+            .search-box input {
+                width: 100%;
+            }
+            .brands-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 12px;
+            }
+        }
+        .search-box input {
+           width: 200px;
+        }
+
+        .fa-mobile-alt{
+            padding-right: 10px;
+        }
+
+    </style>
+    <link rel="stylesheet" href="./tsmtool_files/all.min.css">
+
+</head>
+
+<body>
+    <div class="loading" style="display: none;">
+        <div class="hourglass"></div>
+    </div>
+    <script>
+        window.addEventListener("load", () => {
+            let loader = document.querySelector(".loading");
+            loader.style.display = "none";
+            // loader.addEventListener("transitionend",()=>{
+            // document.body.removeChild("loader");
+            // });
+        });
+    </script>
+    <div id="modalLogInfo" class="modal modal-fixed-footer" tabindex="0">
+        <form class="modal-content">
+            <input id="id" type="text" name="id" value="" hidden="" title="info___name">
+            <pre class="LogInfoBody">            </pre>
+        </form>
+
+        <div class="modal-footer">
+            <a href="https://tsm-tool.com/Support#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+        </div>
+    </div>
+
+    <a class="modal-trigger ReporterUI" href="https://tsm-tool.com/Support#modalLogInfo"></a>
+
+    <script>
+        top.lastmsg = '';
+        top.getcookie = function(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        top.tableData = undefined;
+        //top.AutoRefresh = false;
+        top.msgBar = "Search ...";
+        let light_mode = "light_mode",
+            dark_mode = "dark_mode",
+            theme = "theme";
+        let themeName, CurrentTheme = window.localStorage.getItem(theme);
+        top.root = document.getElementsByTagName('html')[0];
+        if (CurrentTheme == light_mode) {
+            top.root.classList.remove("dark");
+            themeName = dark_mode;
+        } else {
+            top.root.classList.add("dark");
+            themeName = light_mode;
+        }
+
+        function SelfCopy(copyArea) {
+            navigator.clipboard.writeText(copyArea.innerHTML.replace("<div></div>", ''));
+            top.ToastMessage("Copied Success", true);
+        }
+
+        $(document).ready(function() {
+
+            themeSwitcher = document.querySelector(".theme-switcher");
+            themeSwitcher.innerHTML = themeName;
+            let themeSwitcherBtn = document.querySelector(".theme-switcher");
+
+            if (themeSwitcher) {
+                let light_mode = "light_mode",
+                    dark_mode = "dark_mode",
+                    theme = "theme",
+                    themeName;
+
+                themeSwitcher.addEventListener("click", function(event) {
+                    if (themeSwitcher.textContent == light_mode) {
+                        top.root.classList.remove("dark");
+                        top.root.classList.remove("dark-theme");
+                        themeName = dark_mode;
+                    } else {
+                        top.root.classList.add("dark");
+                        top.root.classList.add("dark-theme");
+                        themeName = light_mode;
+                    }
+                    window.localStorage.setItem(theme, themeSwitcher.textContent);
+                    themeSwitcher.innerHTML = themeName;
+                });
+            }
+        });
+
+    </script>
+
+
+    <ul id="slide-out" class="sidenav">
+        <li><a class="waves-effect" href="https://tsm-tool.com/main?act=Main"><span class="material-icons">account_circle</span>Main Page</a></li>
+        <li><a class="waves-effect" href="https://tsm-tool.com/SupportedModels"><span class="material-icons">fact_check</span>Supported Models</a></li>
+        <li><a class="waves-effect" href="https://tsm-tool.com/Resellers"><span class="material-icons">device_hub</span>Our Resellers</a></li>
+        <li><a class="waves-effect" href="https://tsm-tool.com/Plans"><span class="material-icons">request_quote</span>Plans</a></li>
+        <li><a class="waves-effect" href="https://tsm-tool.com/login"><span class="material-icons">account_circle</span>Login</a></li>
+        <li><a class="waves-effect" href="https://tsm-tool.com/signup"><span class="material-icons">key</span>Sign UP</a></li>
+        <li><a class="waves-effect" href="https://tsm-tool.com/frp"><span class="material-icons">key</span>FRP Shortcuts</a></li>
+        <li><a class="waves-effect" href="https://tsm-tool.com/videos"><span class="material-icons">slideshow</span>Videos Tutorials</a></li>
+        <li><a class="waves-effect" href="https://tsm-tool.com/ContactUs"><span class="material-icons">verified_user</span>Contact/Follow Us</a></li>
+        <li><a class="waves-effect" onclick="window.open(&#39;/download&#39;)"><span class="material-icons">download</span>Download</a></li>
+        <li><a class="waves-effect" onclick="window.open(&#39;/drivers&#39;)"><span class="material-icons">home_repair_service</span>Drivers</a></li>
+    </ul>
+
+
+    <nav>
+        <div class="nav-wrapper">
+            <div class="col s12">
+                <a href="https://tsm-tool.com/Support?act=Quick" class="breadcrumb breadcrumb-dsh">📱Support Models</a>
+                <i data-target="slide-out" class="sidenav-trigger waves-effect waves-light left"><i class="material-icons">menu</i></i>
+                <i class="waves-effect waves-light material-icons right theme-switcher" style="margin-right: 6px;">light_mode</i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="progress">
+        <div class="indeterminate"></div>
+    </div>
+
+
+    <div class="container">
+        
+            <h4 style="text-align: center;"><i class="fas fa-mobile-alt"></i><span class="title-models">Smartphone Brands (Count :97+)</span></h4>
+        
+
+        <div class="controls">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search for a model...">
+            </div>
+
+            
+        </div>
+
+        <div class="card-container">
+                
+            
+        
+                
+                    <div class="card clickable" data-url="/SupportedModels/Ace">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Ace</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Ace">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Alcatel">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Alcatel</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Alcatel">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Ans">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Ans</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Ans">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Asus">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Asus</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Asus">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Benco">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Benco</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Benco">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Blackfox">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Blackfox</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Blackfox">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Blackview">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Blackview</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Blackview">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Blu mobile">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Blu mobile</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Blu mobile">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Bq mobile">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Bq mobile</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Bq mobile">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Bravo+">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Bravo+</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Bravo+">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Bvot">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Bvot</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Bvot">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/China mobile">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> China mobile</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/China mobile">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Cloud mobile usa">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Cloud mobile usa</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Cloud mobile usa">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Colorroom">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Colorroom</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Colorroom">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Condor">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Condor</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Condor">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Coolpad">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Coolpad</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Coolpad">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Corn">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Corn</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Corn">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Cricket">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Cricket</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Cricket">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Cubot">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Cubot</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Cubot">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Dexp mobile">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Dexp mobile</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Dexp mobile">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Dialn">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Dialn</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Dialn">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Digma">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Digma</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Digma">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Dilin">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Dilin</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Dilin">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Doogee">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Doogee</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Doogee">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Etel">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Etel</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Etel">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Fih">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Fih</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Fih">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/G-tab">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> G-tab</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/G-tab">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Gplus">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Gplus</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Gplus">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Hisense">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Hisense</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Hisense">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Hmd">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Hmd</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Hmd">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Honor">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Honor</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Honor">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Hotwav">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Hotwav</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Hotwav">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Huawei">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Huawei</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Huawei">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/I_kall">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> I_kall</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/I_kall">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Infinix">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Infinix</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Infinix">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Inoi">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Inoi</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Inoi">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Itel">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Itel</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Itel">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Kalley">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Kalley</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Kalley">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Kxd">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Kxd</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Kxd">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Lanix">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Lanix</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Lanix">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Lava">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Lava</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Lava">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Lenovo">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Lenovo</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Lenovo">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Lg">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Lg</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Lg">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Logic">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Logic</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Logic">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Lt">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Lt</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Lt">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Meizu">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Meizu</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Meizu">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Micromax">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Micromax</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Micromax">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Mobicel">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Mobicel</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Mobicel">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Motorola">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Motorola</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Motorola">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Movitel">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Movitel</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Movitel">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Multilaser">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Multilaser</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Multilaser">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Nokia">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Nokia</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Nokia">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Nothing">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Nothing</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Nothing">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Nuu">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Nuu</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Nuu">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Oneplus">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Oneplus</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Oneplus">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Onn">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Onn</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Onn">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Oppo">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Oppo</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Oppo">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Orbic">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Orbic</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Orbic">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Oukitel">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Oukitel</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Oukitel">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Ox">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Ox</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Ox">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Panasonic">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Panasonic</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Panasonic">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Positivo">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Positivo</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Positivo">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Premio">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Premio</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Premio">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Pritom">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Pritom</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Pritom">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Qmobile">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Qmobile</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Qmobile">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Qukitel">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Qukitel</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Qukitel">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Realme">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Realme</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Realme">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Revvl">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Revvl</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Revvl">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Samsung">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Samsung</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Samsung">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Schok">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Schok</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Schok">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Sky">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Sky</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Sky">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Soda">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Soda</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Soda">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Spurt">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Spurt</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Spurt">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Stylo">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Stylo</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Stylo">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Sugar">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Sugar</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Sugar">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Sunmax">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Sunmax</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Sunmax">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Symphony">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Symphony</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Symphony">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Tcl">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Tcl</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Tcl">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Teclast">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Teclast</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Teclast">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Tecno">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Tecno</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Tecno">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Tinno">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Tinno</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Tinno">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Tiok">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Tiok</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Tiok">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Tracefon">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Tracefon</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Tracefon">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Tracfone">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Tracfone</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Tracfone">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Ulefone">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Ulefone</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Ulefone">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Umidigi">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Umidigi</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Umidigi">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Umx">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Umx</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Umx">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Vgo">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Vgo</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Vgo">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Villaon">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Villaon</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Villaon">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Vivo">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Vivo</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Vivo">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Vortex">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Vortex</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Vortex">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/W&amp;o">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> W&amp;o</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/W&amp;o">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Walton">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Walton</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Walton">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Wiko">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Wiko</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Wiko">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Xiaomi">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Xiaomi</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Xiaomi">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Zte">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Zte</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Zte">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card clickable" data-url="/SupportedModels/Zuum">
+                        <div class="card-header">
+                            
+                            <h2 class="device-name "><i class="fas fa-mobile-alt"></i> Zuum</h2>
+                        </div>
+                        <div class="card-body clickable" data-url="/SupportedModels/Zuum">
+                            <div class="device-brand"><strong></strong>Click to view more ...</div>
+                        
+                            <h3 class="functions-title">OperationSystem</h3>
+                            <div class="function">
+                                <span class="function-name"><i class="function-icon">⚙️</i> Android</span>
+                            </div>
+                        </div>
+                    </div>
+                
+            
+
+                
+            
+        </div>
+
+    </div>
+
+    <a class="btn-floating btn-large red" id="scrollToTopBtn" style="display: none;">
+        <i class="material-icons">arrow_upward</i>
+    </a>
+
+    <!-- materialize JS  -->
+    <script src="./tsmtool_files/materialize.min.js.download"></script>
+    <script src="./tsmtool_files/TSMUKJaveScript.js.download"></script>
+
+    <script>
+        $('.modal').modal();
+        
+        document.addEventListener('click', function(e) {
+            const div = e.target.closest('.clickable');
+            if (div && div.dataset.url) {
+                window.location.href = div.dataset.url;
+            }
+        });
+
+        let UserPanel = "";
+        top.ToastMessage = function(msg, sc_type = true) {
+            top.lastmsg = msg;
+            type = "check_circle";
+            if (!sc_type) {
+                type = "warning_amber";
+            }
+            var toastHTML = "<i class=\"material-icons ico-input3\">" + type + "</i><span class=\"padding-80 msg-text\">" + msg + "</span><i class=\"waves-effect waves-light ico-input3 material-icons btn-refresh\" style=\"width:50px;\">sync</i><i class=\"waves-effect waves-light ico-input3 material-icons btn-copy-msg\" style=\"width:50px;\">content_copy</i>";
+
+            M.toast({
+                html: toastHTML,
+                classes: "waves-effect waves-light btn-large"
+            });
+
+            let btnRefresh = document.querySelector(".btn-refresh"),
+                btnCopymsg = document.querySelector(".btn-copy-msg");
+
+            if (btnRefresh) {
+                btnRefresh.addEventListener("click", function() {
+                    window.location.reload(true);
+                });
+            }
+            if (btnCopymsg) {
+                btnCopymsg.addEventListener("click", function() {
+                    let msg = document.querySelector(".msg-text");
+                    if (msg) {
+                        navigator.clipboard.writeText(msg.innerHTML);
+                    }
+                });
+            }
+        }
+
+        window.addEventListener('offline', function(e) {
+            // top.ToastMessage("Ohh Offline!", false);
+            top.root.classList.add("disable-click");
+        });
+
+        window.addEventListener('online', function(e) {
+            // top.ToastMessage("Ok Online Now!", true);
+            top.root.classList.remove("disable-click");
+        });
+
+        if (!navigator.onLine) {
+            // top.ToastMessage("Ohh Offline!", false);
+            top.root.classList.add("disable-click");
+        }
+
+        function GetDate(BeforeOneDay = false) {
+            let currentDate = new Date();
+            let cDay = currentDate.getDate();
+            let cMonth = currentDate.getMonth() + 1;
+            let cYear = currentDate.getFullYear();
+
+            if (BeforeOneDay) {
+                if (cDay == 1) {
+                    cDay = 30;
+                    cMonth--;
+                } else {
+                    cDay--;
+                }
+            }
+            if (cMonth < 10) {
+                cMonth = "0" + cMonth;
+            }
+            if (cDay < 10) {
+                cDay = "0" + cDay;
+            }
+            value = '';
+            value = cYear + "/" + cMonth + "/" + cDay;
+            return value;
+        }
+
+        function GetMaxDate() {
+            let date = new Date();
+            let toYear = date.getFullYear();
+            let toMonth = date.getMonth();
+            let toDay = date.getDate();
+            return new Date(toYear, toMonth, toDay + 1);
+        }
+
+        function GetMinDate() {
+            let toYear = 2021;
+            let toMonth = 2;
+            let toDay = 1;
+            return new Date(toYear, toMonth, toDay);
+        }
+
+        top.SetupThemeWidgets = function() {
+
+            $(".dropdown-trigger").dropdown();
+
+            $('.sidenav').sidenav();
+
+            $('.modal').modal();
+
+            $('.fixed-action-btn').floatingActionButton({
+                // toolbarEnabled: true,
+                // direction: 'left'
+            });
+
+            $('.tooltipped').tooltip({
+                direction: 'left'
+            });
+
+            $("select").formSelect();
+
+            //top.ToastMessage("Setup Widgets Success []", true);
+        }
+
+        top.SetupFunctions = function() {
+            // Array to track the ids of the details displayed rows
+            var detailRows = [];
+
+            $('#DataTable_id tbody').on('click', 'tr td.details-control', function() {
+                var tr = $(this).closest('tr');
+                var row = top.tableData.row(tr);
+                var idx = $.inArray(tr.attr('id'), detailRows);
+
+                if (row.child.isShown()) {
+                    tr.removeClass('details');
+                    row.child.hide();
+
+                    // Remove from the 'open' array
+                    detailRows.splice(idx, 1);
+                } else {
+                    tr.addClass('details');
+                    row.child(format(row.data())).show();
+
+                    // Add to the 'open' array
+                    if (idx === -1) {
+                        detailRows.push(tr.attr('id'));
+                    }
+                }
+            });
+
+            // On each draw, loop over the `detailRows` array and show any child rows
+            top.tableData.on('draw', function() {
+                $.each(detailRows, function(i, id) {
+                    $('#' + id + ' td.details-control').trigger('click');
+                });
+            });
+
+            document.querySelector("#DataTable_id_filter > label > input[type=search]");
+
+            function ClickBySelector(Selector) {
+                let itm = document.querySelector(Selector)
+                if (itm) {
+                    itm.click();
+                } else {
+                    console.log("Fail to detect ..." + Selector);
+                }
+            }
+
+
+            function createElement(name, classEntry = '', inner = '') {
+                let newItem = document.createElement(name);
+                newItem.innerHTML = inner;
+                if (classEntry) {
+                    newItem.classList = classEntry;
+                }
+                return newItem;
+            }
+
+            $('.datepicker').datepicker({
+                format: 'yyyy/mm/dd',
+                setDefaultDate: true,
+                maxDate: GetMaxDate(),
+                minDate: GetMinDate()
+            });
+
+            top.AutoRefresh = true;
+            //top.ToastMessage("Setup Table Functions", true);
+        }
+
+        $(document).ready(function() {
+            top.SetupThemeWidgets();
+
+        });
+    </script>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            document.getElementById("searchInput").addEventListener("input", (e) => {
+                renderBrands(e.target.value);
+            });
+
+            const searchInput = document.getElementById('searchInput');
+            const deviceCards = document.querySelectorAll('.card');
+    
+            function filterDevices() {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                let found=0;
+                deviceCards.forEach(card => {
+                    let deviceName = '' ;
+                    let deviceModels = '' ;
+                    let deviceChip = '' ;
+                    let deviceInfoBrand = '' ;
+                    try{
+                        deviceName = card.querySelector('.device-name').textContent.toLowerCase();
+                        deviceModels = card.querySelector('.device-models').textContent.toLowerCase();
+                        deviceChip = card.querySelector('.device-chip').textContent.toLowerCase();
+                        deviceInfoBrand = card.querySelector('.device-info').textContent.toLowerCase();
+                    }catch(e){
+                    }
+                    const deviceBrand = card.classList[1]; // Assuming the brand class is the second class
+    
+                    let isSearchMatch = deviceName.includes(searchTerm) ||
+                        deviceModels.includes(searchTerm) ||
+                        deviceChip.includes(searchTerm) ||
+                        deviceInfoBrand.includes(searchTerm);
+                    // Show or hide the card based on the matches
+                    card.style.display = (isSearchMatch) ? 'block' : 'none';
+                    if(isSearchMatch){
+                        found++;
+                    }
+                });
+                try{
+                    document.querySelector('.title-models').innerHTML="Smartphones Device Information ("+found+"+)"
+                }catch(e){
+                    console.log(e);
+                }
+            }
+    
+            searchInput.addEventListener('input', filterDevices);
+
+            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+            // Show the button when the user scrolls down 100px
+            window.onscroll = function () {
+                if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                    scrollToTopBtn.style.display = 'block';
+                } else {
+                    scrollToTopBtn.style.display = 'none';
+                }
+            };
+
+            // Scroll to top when the button is clicked
+            scrollToTopBtn.addEventListener('click', function () {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        
+        top.SetupThemeWidgets = function() {
+
+            $(".dropdown-trigger").dropdown();
+
+            $('.sidenav').sidenav();
+
+            $('.modal').modal();
+
+            $('.fixed-action-btn').floatingActionButton({
+                // toolbarEnabled: true,
+                // direction: 'left'
+            });
+
+            $('.tooltipped').tooltip({
+                direction: 'left'
+            });
+
+            $("select").formSelect();
+
+            //top.ToastMessage("Setup Widgets Success []", true);
+        }
+
+        top.SetupThemeWidgets();
+
+        const icons = {
+            apple: `<svg viewBox="0 0 24 24" fill="#555555"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>`,
+            
+            android: `<svg viewBox="0 0 24 24" fill="#3DDC84"><path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v7c0 .83.67 1.5 1.5 1.5S5 17.33 5 16.5v-7C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-5.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48C13.85 1.23 12.95 1 12 1c-.96 0-1.86.23-2.66.63L7.85.15c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31C6.97 3.26 6 5.01 6 7h12c0-1.99-.97-3.75-2.47-4.84zM10 5H9V4h1v1zm5 0h-1V4h1v1z"/></svg>`
+        };
+
+        //${getIcon(brand.isApple)}
+
+        function getIcon(isApple) {
+            return isApple ? icons.apple : icons.android;
+        }
+
+        document.querySelectorAll(".brand-card").forEach(brandDiv => {
+            const os = brandDiv.dataset.os;                // "apple" or "android"
+            const isApple = os === "apple";
+
+            const iconHolder = brandDiv.querySelector(".icon");
+            if (iconHolder)
+                iconHolder.innerHTML = getIcon(isApple);
+        });
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute("data-theme");
+            const next = current === "dark" ? "light" : "dark";
+            html.setAttribute("data-theme", next);
+            localStorage.setItem("theme", next);
+        }
+
+        // Init
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+
+</script>
+
+<script defer="" src="./tsmtool_files/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;rayId&quot;:&quot;9ba54b032879dc9e&quot;,&quot;version&quot;:&quot;2025.9.1&quot;,&quot;r&quot;:1,&quot;token&quot;:&quot;4f3dea8280e4420e8c49753eef9c85d3&quot;,&quot;serverTiming&quot;:{&quot;name&quot;:{&quot;cfExtPri&quot;:true,&quot;cfEdge&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfL4&quot;:true,&quot;cfSpeedBrain&quot;:true,&quot;cfCacheStatus&quot;:true}}}" crossorigin="anonymous"></script>
+
+
+<div class="sidenav-overlay"></div><div class="drag-target"></div></body></html>

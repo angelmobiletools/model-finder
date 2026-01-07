@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Support - Model Finder</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_overrides.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="mesh-bg"></div>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-wrapper">
+                    <div class="logo-main">
+                        <span class="logo-icon">📱</span>
+                        <span class="logo-text">Model<span>Finder</span></span>
+                    </div>
+                    <span class="logo-subtitle">By Angel Mobile</span>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#brands">Brands</a></li>
+                <li><a href="#models">Models</a></li>
+                <li class="cta"><a href="#" class="btn-primary">Download Tool</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <h1 class="hero-title">Check Your Device <span class="gradient-text">Support Status</span></h1>
+                <p class="hero-subtitle">Search over 5,000+ models for FRP, Flashing, and Bootloader support.</p>
+
+                <div class="search-container">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="main-search"
+                            placeholder="Enter model name or codename (e.g. Galaxy S23, Mi 11)..." autocomplete="off">
+                        <button class="search-btn">Search</button>
+                    </div>
+                    <div id="search-suggestions" class="suggestions-dropdown hidden"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="brands" class="brands-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Supported Brands</h2>
+                    <p>Select a brand to filter models</p>
+                </div>
+                <div class="brand-grid" id="brand-grid">
+                    <!-- Brands will be injected here -->
+                </div>
+            </div>
+        </section>
+
+        <section id="models" class="models-section">
+            <div class="container">
+                <div class="table-container glass">
+                    <div class="table-controls">
+                        <div class="brand-filter">
+                            <label>Filter by Brand:</label>
+                            <select id="brand-select">
+                                <option value="all">All Brands</option>
+                            </select>
+                        </div>
+                        <div class="model-search-container">
+                            <div class="search-box small-search">
+                                <span class="search-icon">🔍</span>
+                                <input type="text" id="model-filter" placeholder="Search model...">
+                                <button class="search-btn" id="model-search-btn">Search</button>
+                            </div>
+                        </div>
+                        <div class="count-display">
+                            Showing <span id="model-count">0</span> models
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="models-table">
+                            <thead>
+                                <tr>
+                                    <th>Brand</th>
+                                    <th>Model Name</th>
+                                    <th>Codename</th>
+                                    <th>Supported Operations</th>
+                                    <th>Tool</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="models-body">
+                                <!-- Models will be injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div id="pagination-controls" class="pagination-container hidden">
+                        <button id="prev-btn" class="page-btn">Previous</button>
+                        <span id="page-info">Page 1 of 1</span>
+                        <button id="next-btn" class="page-btn">Next</button>
+                    </div>
+
+                    <div id="no-results" class="hidden">
+                        <div class="empty-state">
+                            <p>No models found matching your search.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-text">Model<span>Finder</span></span>
+                    <span class="logo-subtitle-footer">By Angel Mobile</span>
+                    <p>The ultimate database for mobile technicians.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="#">Telegram Channel</a></li>
+                        <li><a href="#">WhatsApp Support</a></li>
+                        <li><a href="#">YouTube Tutorials</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 ModelFinder. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="data_amt.js"></script>
+    <script src="data_unlocktool.js"></script>
+    <script src="data_chimeratool.js"></script>
+    <script src="data_tsm.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
